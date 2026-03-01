@@ -130,17 +130,17 @@ pharmacy-service    → http://localhost:8087/api/medications
 👨‍⚕️ Médecin
 text
 Email: youssef.benjelloun@gmail.com
-Mot de passe: 123456
+Mot de passe: youssef123
 ID: 3
 👤 Patient (ahmed allami)
 text
 Email: ahmed.allami@gmail.com
-Mot de passe: 123456
+Mot de passe: ahmed123
 ID: 1
 💊 Pharmacie
 text
-Email: marie.dupont@pharmacie.fr
-Mot de passe: pharmacie123
+Email: nadiafassi67@gmail.com
+Mot de passe: nadia123
 🛠 Commandes utiles
 Docker
 bash
@@ -243,4 +243,4 @@ Projet développé dans le cadre d'une application de gestion de santé
 📄 Licence
 Ce projet est sous licence MIT. Voir le fichier LICENSE pour plus de détails.
 
-<div align="center"> <strong>🏥 MyHeart Healthcare System - 2026</strong><br> <em>Votre santé, notre priorité</em> </div> ```
+
