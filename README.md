@@ -1,6 +1,20 @@
 # 🏥 MyHeart Healthcare System
 
-Plateforme intégrée de gestion de santé avec microservices, conteneurs Docker et architecture modulaire.
+<div align="center">
+  <img src="https://img.shields.io/badge/version-1.0.0-blue.svg" alt="Version 1.0.0">
+  <img src="https://img.shields.io/badge/license-MIT-green.svg" alt="License MIT">
+  <img src="https://img.shields.io/badge/Spring%20Boot-3.0-brightgreen" alt="Spring Boot">
+  <img src="https://img.shields.io/badge/React-18-blue" alt="React">
+  <img src="https://img.shields.io/badge/Docker-24.0-cyan" alt="Docker">
+  <img src="https://img.shields.io/badge/PostgreSQL-15-blue" alt="PostgreSQL">
+  <img src="https://img.shields.io/badge/MongoDB-6-green" alt="MongoDB">
+</div>
+
+<p align="center">
+  <strong>Plateforme intégrée de gestion de santé avec microservices, conteneurs Docker et architecture modulaire</strong>
+</p>
+
+---
 
 ## 📋 Table des matières
 - [Architecture du projet](#architecture-du-projet)
@@ -11,6 +25,10 @@ Plateforme intégrée de gestion de santé avec microservices, conteneurs Docker
 - [Utilisation](#utilisation)
 - [Dépannage](#dépannage)
 - [API Documentation](#api-documentation)
+- [Auteurs](#auteurs)
+- [Licence](#licence)
+
+---
 
 ## 🏗 Architecture du projet
 myheart-healthcare-system/
@@ -32,22 +50,28 @@ myheart-healthcare-system/
 │ │ ├── pharmacy/ # Espace pharmacie
 │ │ ├── lab/ # Espace laboratoire
 │ │ ├── reception/ # Espace réception
-│ │ └── billing/ # Espace caisse
-│ │ └── Layout/
-│ │ └── ProtectedRoute.js
-│ │ └── Unauthorized.js/
+│ │ ├── billing/ # Espace caisse
+│ │ └── layout/
+│ │ ├── MainLayout.js
+│ │ ├── ProtectedRoute.js
+│ │ └── Unauthorized.js
 │ ├── context/ # Contexte d'authentification
+│ │ └── AuthContext.js
 │ └── App.js # Point d'entrée
 └── package.json
 
 text
 
+---
+
 ## 🔧 Prérequis
 
-- **Docker** et **Docker Compose** (pour les conteneurs)
+- **Docker** 24.0+ et **Docker Compose** (pour les conteneurs)
 - **Node.js** v18+ (pour le développement frontend)
 - **Java** 17+ (pour les services Spring Boot)
-- **Git** (pour le versionnement)
+- **Git** 2.40+ (pour le versionnement)
+
+---
 
 ## 🚀 Installation et démarrage
 
@@ -87,18 +111,13 @@ Réception	http://localhost:3000/reception/dashboard	🏥 Agent d'accueil
 Caisse	http://localhost:3000/billing/dashboard	💰 Caissier
 🔌 Ports et accès
 Bases de données
-PostgreSQL patient-db: 5432
-
-PostgreSQL appointment-db: 5433
-
-PostgreSQL billing-db: 5434
-
-PostgreSQL pharmacy-db: 5435
-
-MongoDB ehr-db: 27017
-
-MongoDB lab-db: 27018
-
+Base de données	Port interne	Port exposé
+patient-db	5432	5432
+appointment-db	5432	5433
+billing-db	5432	5434
+pharmacy-db	5432	5435
+ehr-db	27017	27017
+lab-db	27017	27018
 APIs
 text
 patient-service     → http://localhost:8081/api/patients
@@ -108,16 +127,17 @@ ehr-service         → http://localhost:8084/api/ehr
 lab-service         → http://localhost:8085/api/lab
 pharmacy-service    → http://localhost:8087/api/medications
 👥 Utilisateurs de démonstration
-Médecin
+👨‍⚕️ Médecin
 text
 Email: youssef.benjelloun@gmail.com
 Mot de passe: 123456
-Patient (ahmed allami)
+ID: 3
+👤 Patient (ahmed allami)
 text
 Email: ahmed.allami@gmail.com
 Mot de passe: 123456
 ID: 1
-Pharmacie
+💊 Pharmacie
 text
 Email: marie.dupont@pharmacie.fr
 Mot de passe: pharmacie123
@@ -174,55 +194,53 @@ Solution : Vider le cache navigateur (Ctrl + F5) ou redémarrer le serveur
 
 📚 API Documentation
 Patient Service (/api/patients)
-GET / - Liste tous les patients
-
-GET /{id} - Détail d'un patient
-
-POST / - Créer un patient
-
+Méthode	Endpoint	Description
+GET	/	Liste tous les patients
+GET	/{id}	Détail d'un patient
+POST	/	Créer un patient
 Appointment Service (/api/appointments)
-GET / - Liste tous les rendez-vous
-
-GET /doctor/{doctorId} - Rendez-vous d'un médecin
-
-GET /patient/{patientId} - Rendez-vous d'un patient
-
-POST / - Créer un rendez-vous
-
+Méthode	Endpoint	Description
+GET	/	Liste tous les rendez-vous
+GET	/doctor/{doctorId}	Rendez-vous d'un médecin
+GET	/patient/{patientId}	Rendez-vous d'un patient
+POST	/	Créer un rendez-vous
 Billing Service (/api/bills)
-GET / - Liste toutes les factures
-
-GET /{id} - Détail d'une facture
-
-GET /patient/{patientId} - Factures d'un patient
-
-POST / - Créer une facture
-
-PUT /{id}/pay - Marquer comme payée
-
+Méthode	Endpoint	Description
+GET	/	Liste toutes les factures
+GET	/{id}	Détail d'une facture
+GET	/patient/{patientId}	Factures d'un patient
+POST	/	Créer une facture
+PUT	/{id}/pay	Marquer comme payée
 EHR Service (/api/ehr)
-GET / - Liste tous les dossiers médicaux
-
-GET /patient/{patientId} - Dossiers d'un patient
-
-POST / - Créer un dossier médical
-
+Méthode	Endpoint	Description
+GET	/	Liste tous les dossiers médicaux
+GET	/patient/{patientId}	Dossiers d'un patient
+POST	/	Créer un dossier médical
 Lab Service (/api/lab)
-GET / - Liste toutes les analyses
-
-GET /patient/{patientId} - Analyses d'un patient
-
-POST / - Créer une analyse
-
-PATCH /{id} - Mettre à jour une analyse
-
+Méthode	Endpoint	Description
+GET	/	Liste toutes les analyses
+GET	/patient/{patientId}	Analyses d'un patient
+POST	/	Créer une analyse
+PATCH	/{id}	Mettre à jour une analyse
 Pharmacy Service (/api/medications et /api/prescriptions)
-GET /medications - Liste tous les médicaments
+Méthode	Endpoint	Description
+GET	/medications	Liste tous les médicaments
+POST	/medications	Ajouter un médicament
+GET	/prescriptions	Liste toutes les prescriptions
+GET	/prescriptions/patient/{patientId}	Prescriptions d'un patient
+POST	/prescriptions	Créer une prescription
+PUT	/prescriptions/{id}/cancel	Annuler une prescription
+👨‍💻 Auteurs
+- **NASRHOUDA** - *Data DevOps Cloud Engineer* - [GitHub](https://github.com/NASRHOUDA)
 
-POST /medications - Ajouter un médicament
+Remerciements
+Stack: Spring Boot, React, Docker, PostgreSQL, MongoDB
 
-GET /prescriptions - Liste toutes les prescriptions
+Architecture microservices
 
-GET /prescriptions/patient/{patientId} - Prescriptions d'un patient
+Projet développé dans le cadre d'une application de gestion de santé
 
-POST /prescriptions - Créer une prescription
+📄 Licence
+Ce projet est sous licence MIT. Voir le fichier LICENSE pour plus de détails.
+
+<div align="center"> <strong>🏥 MyHeart Healthcare System - 2026</strong><br> <em>Votre santé, notre priorité</em> </div> ```
