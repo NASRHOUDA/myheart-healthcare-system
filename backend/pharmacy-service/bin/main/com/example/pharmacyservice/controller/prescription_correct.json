@@ -1,0 +1,11 @@
+{
+    "patientId": 1,
+    "doctorId": 1,
+    "medicationName": "Doliprane",
+    "medicationCode": "DOL-1000-281",
+    "dosage": "1000mg",
+    "frequency": "2 fois par jour",
+    "duration": "7 jours",
+    "instructions": "A prendre avec un verre d eau",
+    "status": "ACTIVE"
+}

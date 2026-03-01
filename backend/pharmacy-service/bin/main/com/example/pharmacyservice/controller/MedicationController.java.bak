@@ -1,0 +1,140 @@
+package com.example.pharmacyservice.controller;
+
+import com.example.pharmacyservice.model.Medication;
+import com.example.pharmacyservice.service.MedicationService;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.*;
+import org.springframework.web.server.ResponseStatusException;
+
+import java.util.List;
+
+@RestController
+@RequestMapping("/api/medications")
+@CrossOrigin(origins = "*", allowedHeaders = "*", methods = {RequestMethod.GET, RequestMethod.POST, RequestMethod.PUT, RequestMethod.DELETE, RequestMethod.PATCH, RequestMethod.OPTIONS})
+public class MedicationController {
+
+    @Autowired
+    private MedicationService medicationService;
+
+    // GET all medications
+    @GetMapping
+    public ResponseEntity<List<Medication>> getAllMedications() {
+        try {
+            List<Medication> medications = medicationService.getAllMedications();
+            return ResponseEntity.ok(medications);
+        } catch (Exception e) {
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).build();
+        }
+    }
+
+    // GET medication by ID
+    @GetMapping("/{id}")
+    public ResponseEntity<Medication> getMedicationById(@PathVariable Long id) {
+        try {
+            Medication medication = medicationService.getMedicationById(id);
+            return ResponseEntity.ok(medication);
+        } catch (RuntimeException e) {
+            return ResponseEntity.notFound().build();
+        } catch (Exception e) {
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).build();
+        }
+    }
+
+    // POST create new medication
+    @PostMapping
+    public ResponseEntity<Medication> createMedication(@RequestBody Medication medication) {
+        try {
+            Medication createdMedication = medicationService.createMedication(medication);
+            return ResponseEntity.status(HttpStatus.CREATED).body(createdMedication);
+        } catch (Exception e) {
+            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(null);
+        }
+    }
+
+    // PUT update medication (complete update)
+    @PutMapping("/{id}")
+    public ResponseEntity<Medication> updateMedication(@PathVariable Long id, @RequestBody Medication medication) {
+        try {
+            medication.setId(id);
+            Medication updatedMedication = medicationService.updateMedication(id, medication);
+            return ResponseEntity.ok(updatedMedication);
+        } catch (RuntimeException e) {
+            return ResponseEntity.notFound().build();
+        } catch (Exception e) {
+            return ResponseEntity.status(HttpStatus.BAD_REQUEST).build();
+        }
+    }
+
+    // PATCH update medication (partial update)
+    @PatchMapping("/{id}")
+    public ResponseEntity<Medication> partialUpdateMedication(@PathVariable Long id, @RequestBody Medication medication) {
+        try {
+            Medication existingMedication = medicationService.getMedicationById(id);
+            
+            // Mise à jour partielle - seulement les champs non null
+            if (medication.getName() != null) existingMedication.setName(medication.getName());
+            if (medication.getGenericName() != null) existingMedication.setGenericName(medication.getGenericName());
+            if (medication.getDescription() != null) existingMedication.setDescription(medication.getDescription());
+            if (medication.getStrength() != null) existingMedication.setStrength(medication.getStrength());
+            if (medication.getDosageForm() != null) existingMedication.setDosageForm(medication.getDosageForm());
+            if (medication.getManufacturer() != null) existingMedication.setManufacturer(medication.getManufacturer());
+            if (medication.getCategory() != null) existingMedication.setCategory(medication.getCategory());
+            if (medication.getCode() != null) existingMedication.setCode(medication.getCode());
+            if (medication.getStockQuantity() != null) existingMedication.setStockQuantity(medication.getStockQuantity());
+            if (medication.getExpiryDate() != null) existingMedication.setExpiryDate(medication.getExpiryDate());
+            if (medication.getPrice() != null) existingMedication.setPrice(medication.getPrice());
+            if (medication.getRequiresPrescription() != null) existingMedication.setRequiresPrescription(medication.getRequiresPrescription());
+            if (medication.getUnit() != null) existingMedication.setUnit(medication.getUnit());
+
+            Medication updatedMedication = medicationService.updateMedication(id, existingMedication);
+            return ResponseEntity.ok(updatedMedication);
+        } catch (RuntimeException e) {
+            return ResponseEntity.notFound().build();
+        } catch (Exception e) {
+            return ResponseEntity.status(HttpStatus.BAD_REQUEST).build();
+        }
+    }
+
+    // DELETE medication
+    @DeleteMapping("/{id}")
+    public ResponseEntity<Void> deleteMedication(@PathVariable Long id) {
+        try {
+            medicationService.deleteMedication(id);
+            return ResponseEntity.noContent().build();
+        } catch (RuntimeException e) {
+            return ResponseEntity.notFound().build();
+        } catch (Exception e) {
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).build();
+        }
+    }
+
+    // GET low stock medications
+    @GetMapping("/low-stock")
+    public ResponseEntity<List<Medication>> getLowStockMedications(@RequestParam(defaultValue = "10") int threshold) {
+        try {
+            List<Medication> medications = medicationService.getLowStockMedications(threshold);
+            return ResponseEntity.ok(medications);
+        } catch (Exception e) {
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).build();
+        }
+    }
+
+    // GET expiring medications
+    @GetMapping("/expiring")
+    public ResponseEntity<List<Medication>> getExpiringMedications(@RequestParam(defaultValue = "30") int days) {
+        try {
+            List<Medication> medications = medicationService.getExpiringMedications(days);
+            return ResponseEntity.ok(medications);
+        } catch (Exception e) {
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).build();
+        }
+    }
+
+    // OPTIONS handler for CORS preflight
+    @RequestMapping(method = RequestMethod.OPTIONS)
+    public ResponseEntity<Void> options() {
+        return ResponseEntity.ok().build();
+    }
+}

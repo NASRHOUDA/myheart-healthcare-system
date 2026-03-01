@@ -1,0 +1,131 @@
+package com.example.pharmacyservice.controller;
+
+import com.example.pharmacyservice.entity.Prescription;
+import com.example.pharmacyservice.dto.PrescriptionDTO;
+import com.example.pharmacyservice.repository.PrescriptionRepository;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
+import org.springframework.web.bind.annotation.*;
+import org.springframework.web.client.RestTemplate;
+import org.springframework.web.server.ResponseStatusException;
+
+import java.time.LocalDateTime;
+import java.util.List;
+import java.util.stream.Collectors;
+
+@RestController
+@RequestMapping("/api/prescriptions")
+@CrossOrigin(origins = "*")
+public class PrescriptionController {
+
+    @Autowired
+    private PrescriptionRepository prescriptionRepository;
+    
+    @Autowired
+    private RestTemplate restTemplate;
+
+    @GetMapping
+    public List<PrescriptionDTO> getAllPrescriptions() {
+        return prescriptionRepository.findAll().stream()
+                .map(this::convertToDTO)
+                .collect(Collectors.toList());
+    }
+
+    @GetMapping("/{id}")
+    public PrescriptionDTO getPrescriptionById(@PathVariable Long id) {
+        Prescription prescription = prescriptionRepository.findById(id)
+                .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "Prescription not found"));
+        return convertToDTO(prescription);
+    }
+
+    @GetMapping("/patient/{patientId}")
+    public List<PrescriptionDTO> getPrescriptionsByPatient(@PathVariable Long patientId) {
+        return prescriptionRepository.findByPatientId(patientId).stream()
+                .map(this::convertToDTO)
+                .collect(Collectors.toList());
+    }
+
+    @GetMapping("/patient/{patientId}/active")
+    public List<PrescriptionDTO> getActivePrescriptionsByPatient(@PathVariable Long patientId) {
+        return prescriptionRepository.findByPatientIdAndStatus(patientId, "ACTIVE").stream()
+                .map(this::convertToDTO)
+                .collect(Collectors.toList());
+    }
+
+    @PostMapping
+    @ResponseStatus(HttpStatus.CREATED)
+    public PrescriptionDTO createPrescription(@RequestBody PrescriptionDTO prescriptionDTO) {
+        // Vérifier que le patient existe
+        try {
+            String patientServiceUrl = "http://patient-service:8081/api/patients/" + prescriptionDTO.getPatientId();
+            restTemplate.getForObject(patientServiceUrl, Object.class);
+        } catch (Exception e) {
+            throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "Patient not found");
+        }
+        
+        Prescription prescription = convertToEntity(prescriptionDTO);
+        Prescription savedPrescription = prescriptionRepository.save(prescription);
+        return convertToDTO(savedPrescription);
+    }
+
+    @PutMapping("/{id}/dispense")
+    public PrescriptionDTO dispensePrescription(@PathVariable Long id, @RequestParam String pharmacist) {
+        Prescription prescription = prescriptionRepository.findById(id)
+                .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "Prescription not found"));
+        
+        if (!"ACTIVE".equals(prescription.getStatus())) {
+            throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "Prescription is not active");
+        }
+        
+        prescription.setStatus("DISPENSED");
+        prescription.setDispensedDate(LocalDateTime.now());
+        prescription.setDispensedBy(pharmacist);
+        
+        Prescription updatedPrescription = prescriptionRepository.save(prescription);
+        return convertToDTO(updatedPrescription);
+    }
+
+    @PutMapping("/{id}/cancel")
+    public PrescriptionDTO cancelPrescription(@PathVariable Long id) {
+        Prescription prescription = prescriptionRepository.findById(id)
+                .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "Prescription not found"));
+        
+        prescription.setStatus("CANCELLED");
+        Prescription updatedPrescription = prescriptionRepository.save(prescription);
+        return convertToDTO(updatedPrescription);
+    }
+
+    private PrescriptionDTO convertToDTO(Prescription prescription) {
+        PrescriptionDTO dto = new PrescriptionDTO();
+        dto.setId(prescription.getId());
+        dto.setPatientId(prescription.getPatientId());
+        dto.setDoctorId(prescription.getDoctorId());
+        dto.setAppointmentId(prescription.getAppointmentId());
+        dto.setMedicationName(prescription.getMedicationName());
+        dto.setMedicationCode(prescription.getMedicationCode());
+        dto.setDosage(prescription.getDosage());
+        dto.setFrequency(prescription.getFrequency());
+        dto.setDuration(prescription.getDuration());
+        dto.setInstructions(prescription.getInstructions());
+        dto.setStatus(prescription.getStatus());
+        dto.setPrescribedDate(prescription.getPrescribedDate());
+        dto.setExpiryDate(prescription.getExpiryDate());
+        return dto;
+    }
+
+    private Prescription convertToEntity(PrescriptionDTO dto) {
+        Prescription prescription = new Prescription();
+        prescription.setPatientId(dto.getPatientId());
+        prescription.setDoctorId(dto.getDoctorId());
+        prescription.setAppointmentId(dto.getAppointmentId());
+        prescription.setMedicationName(dto.getMedicationName());
+        prescription.setMedicationCode(dto.getMedicationCode());
+        prescription.setDosage(dto.getDosage());
+        prescription.setFrequency(dto.getFrequency());
+        prescription.setDuration(dto.getDuration());
+        prescription.setInstructions(dto.getInstructions());
+        prescription.setStatus(dto.getStatus());
+        prescription.setExpiryDate(dto.getExpiryDate());
+        return prescription;
+    }
+}

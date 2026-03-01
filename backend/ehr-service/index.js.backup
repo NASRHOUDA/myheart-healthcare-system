@@ -1,0 +1,73 @@
+const express = require('express');
+const mongoose = require('mongoose');
+const cors = require('cors');
+const app = express();
+const PORT = 8084;
+
+console.log('🚀 Starting EHR service...');
+console.log('📡 Attempting to connect to MongoDB...');
+
+app.use(cors());
+app.use(express.json());
+
+// Connexion MongoDB - sans options dépréciées
+mongoose.connect('mongodb://ehr-db:27017/ehrdb')
+    .then(() => {
+        console.log('✅ Successfully connected to MongoDB');
+    })
+    .catch(err => {
+        console.error('❌ MongoDB connection error:', err.message);
+    });
+
+// Schema
+const ehrSchema = new mongoose.Schema({
+    patientId: Number,
+    diagnosis: String,
+    notes: String,
+    date: { type: Date, default: Date.now }
+});
+
+const EHR = mongoose.model('EHR', ehrSchema);
+
+// Routes
+app.get('/api/ehr', async (req, res) => {
+    try {
+        const records = await EHR.find();
+        res.json(records);
+    } catch (err) {
+        res.status(500).json({ error: err.message });
+    }
+});
+
+app.post('/api/ehr', async (req, res) => {
+    try {
+        const ehr = new EHR(req.body);
+        await ehr.save();
+        res.status(201).json(ehr);
+    } catch (err) {
+        res.status(400).json({ error: err.message });
+    }
+});
+
+app.get('/api/ehr/patient/:patientId', async (req, res) => {
+    try {
+        const records = await EHR.find({ patientId: parseInt(req.params.patientId) });
+        res.json(records);
+    } catch (err) {
+        res.status(500).json({ error: err.message });
+    }
+});
+
+app.get('/health', (req, res) => {
+    res.json({ 
+        status: 'OK', 
+        service: 'ehr-service',
+        mongodb: mongoose.connection.readyState === 1 ? 'connected' : 'disconnected'
+    });
+});
+
+app.listen(PORT, '0.0.0.0', () => {
+    console.log(`✅ EHR service running on port ${PORT}`);
+    console.log(`   Health: http://localhost:${PORT}/health`);
+    console.log(`   API: http://localhost:${PORT}/api/ehr`);
+});
