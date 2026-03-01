@@ -53,7 +53,7 @@ text
 
 ### 1. Cloner le projet
 ```bash
-git clone <votre-repo>
+git clone https://github.com/NASRHOUDA/myheart-healthcare-system.git
 cd myheart-healthcare-system
 2. Lancer tous les services avec Docker
 bash
