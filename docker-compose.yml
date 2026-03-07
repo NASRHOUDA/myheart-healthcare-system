@@ -1,4 +1,55 @@
 services:
+  
+    # --- Frontend React ---
+  frontend:
+    build: ./frontend
+    container_name: frontend
+    ports:
+      - "3000:80"
+    depends_on:
+      - api-gateway
+      - patient-service
+      - appointment-service
+      - billing-service
+      - ehr-service
+      - lab-service
+      - pharmacy-service
+    networks:
+      - myheart-network
+  # --- Service Discovery ---
+  consul:
+    image: consul:1.15
+    container_name: consul
+    ports:
+      - "8500:8500"
+      - "8600:8600/udp"
+    command: "agent -dev -client=0.0.0.0"
+    volumes:
+      - ./consul/config:/consul/config
+    networks:
+      - myheart-network
+    healthcheck:
+      test: ["CMD", "consul", "members"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+  
+    # --- API Gateway ---
+  api-gateway:
+    build: ./backend/api-gateway
+    container_name: api-gateway
+    ports:
+      - "8080:8080"
+    depends_on:
+      - consul
+      - patient-service
+      - appointment-service
+      - billing-service
+      - pharmacy-service
+      - ehr-service
+      - lab-service
+    networks:
+      - myheart-network
   # --- Bases de données PostgreSQL ---
   patient-db:
     image: postgres:15

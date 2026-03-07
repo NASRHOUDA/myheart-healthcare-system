@@ -1,17 +1,30 @@
 const express = require('express');
 const mongoose = require('mongoose');
 const cors = require('cors');
+const ConsulRegistry = require('./consul-register');
+
 const app = express();
-const PORT = 8084;
+const PORT = process.env.SERVICE_PORT || 8084;
+const SERVICE_NAME = process.env.SERVICE_NAME || 'ehr-service';
 
 console.log('🚀 Starting EHR service...');
 console.log('📡 Attempting to connect to MongoDB...');
 
+// Initialisation Consul
+const consulRegistry = new ConsulRegistry(SERVICE_NAME, PORT);
+
 app.use(cors());
 app.use(express.json());
 
+// Middleware pour forcer l'UTF-8
+app.use((req, res, next) => {
+  res.setHeader('Content-Type', 'application/json; charset=utf-8');
+  next();
+});
+
 // Connexion MongoDB
-mongoose.connect('mongodb://ehr-db:27017/ehrdb')
+const MONGODB_URI = process.env.MONGODB_URI || 'mongodb://ehr-db:27017/ehrdb';
+mongoose.connect(MONGODB_URI)
     .then(() => {
         console.log('✅ Successfully connected to MongoDB');
     })
@@ -141,12 +154,13 @@ app.delete('/api/ehr/patient/:patientId', async (req, res) => {
     }
 });
 
-// Health check
+// Health check (utilisé par Consul)
 app.get('/health', (req, res) => {
     res.json({ 
         status: 'OK', 
-        service: 'ehr-service',
+        service: SERVICE_NAME,
         mongodb: mongoose.connection.readyState === 1 ? 'connected' : 'disconnected',
+        consul: 'registered',
         timestamp: new Date()
     });
 });
@@ -156,16 +170,33 @@ app.use((req, res) => {
     res.status(404).json({ error: 'Route non trouvée' });
 });
 
-app.listen(PORT, '0.0.0.0', () => {
-    console.log(`✅ EHR service running on port ${PORT}`);
-    console.log(`   Health: http://localhost:${PORT}/health`);
-    console.log(`   API: http://localhost:${PORT}/api/ehr`);
-    console.log(`   Routes disponibles:`);
-    console.log(`   - GET    /api/ehr`);
-    console.log(`   - GET    /api/ehr/:id`);
-    console.log(`   - GET    /api/ehr/patient/:patientId`);
-    console.log(`   - POST   /api/ehr`);
-    console.log(`   - PUT    /api/ehr/:id`);
-    console.log(`   - PATCH  /api/ehr/:id`);
-    console.log(`   - DELETE /api/ehr/:id`);
+// Enregistrement dans Consul au démarrage
+consulRegistry.register().then(() => {
+    app.listen(PORT, '0.0.0.0', () => {
+        console.log(`✅ ${SERVICE_NAME} running on port ${PORT}`);
+        console.log(`   Health: http://localhost:${PORT}/health`);
+        console.log(`   API: http://localhost:${PORT}/api/ehr`);
+        console.log(`   Consul: http://consul:8500`);
+        console.log(`   Routes disponibles:`);
+        console.log(`   - GET    /api/ehr`);
+        console.log(`   - GET    /api/ehr/:id`);
+        console.log(`   - GET    /api/ehr/patient/:patientId`);
+        console.log(`   - POST   /api/ehr`);
+        console.log(`   - PUT    /api/ehr/:id`);
+        console.log(`   - PATCH  /api/ehr/:id`);
+        console.log(`   - DELETE /api/ehr/:id`);
+    });
+});
+
+// Désenregistrement à l'arrêt
+process.on('SIGINT', async () => {
+    console.log('🛑 Arrêt du service...');
+    await consulRegistry.deregister();
+    process.exit();
+});
+
+process.on('SIGTERM', async () => {
+    console.log('🛑 Arrêt du service...');
+    await consulRegistry.deregister();
+    process.exit();
 });

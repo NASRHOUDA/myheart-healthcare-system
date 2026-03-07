@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import { Outlet, useNavigate, useLocation } from 'react-router-dom';
 import { useAuth } from '../../context/AuthContext';
+import ChatBot from '../../components/ChatBot';
 
 const styles = `
   @import url('https://fonts.googleapis.com/css2?family=Instrument+Serif:ital@0;1&family=Outfit:wght@300;400;500;600&display=swap');
@@ -326,7 +327,7 @@ const pageTitles = {
   orders:        'Demandes',
   users:         'Utilisateurs',
   services:      'Services',
-  '':            'Tableau de bord', // Pour la route racine
+  '':            'Tableau de bord',
 };
 
 function MainLayout() {
@@ -432,6 +433,16 @@ function MainLayout() {
           </div>
 
         </div>
+
+        {/* ChatBot */}
+        {user && (
+          <ChatBot 
+            userRole={user?.role}
+            userEmail={user?.email}
+            userName={user?.firstName}
+          />
+        )}
+
       </div>
     </>
   );
