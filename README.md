@@ -674,9 +674,9 @@ Ce projet est sous licence **MIT**. Voir le fichier [LICENSE](LICENSE) pour plus
 
 | Version | Date | Changements |
 |---------|------|-------------|
-| v3.0.0 | Mars 2026 | Kafka/Redpanda · Pattern SAGA · Détection anomalies |
-| v2.0.0 | 2025 | API Gateway · Circuit Breakers · Consul · Chatbot |
-| v1.0.0 | 2025 | Version initiale microservices |
+| v3.0.0 | 14 Mars 2026 | Kafka/Redpanda · Pattern SAGA · Détection anomalies |
+| v2.0.0 | 7 Mars 2026 | API Gateway · Circuit Breakers · Consul · Chatbot |
+| v1.0.0 | 1 Mars 2026 | Version initiale microservices |
 
 <sub>🏥 MyHeart Healthcare System v3.0 — Mini-Projet SOA — INPT Filière SUD — 2025/2026</sub>
 
