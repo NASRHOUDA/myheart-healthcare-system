@@ -1,78 +1,63 @@
 <div align="center">
 
-<img src="https://img.shields.io/badge/version-3.0.0-blue.svg" alt="Version 3.0.0">
-<img src="https://img.shields.io/badge/license-MIT-green.svg" alt="License MIT">
-<img src="https://img.shields.io/badge/Spring%20Boot-3.0-brightgreen" alt="Spring Boot">
-<img src="https://img.shields.io/badge/React-18-blue" alt="React">
-<img src="https://img.shields.io/badge/Node.js-18-green" alt="Node.js">
-<img src="https://img.shields.io/badge/Docker-24.0-cyan" alt="Docker">
-<img src="https://img.shields.io/badge/Kafka-Redpanda-orange" alt="Kafka Redpanda">
-<img src="https://img.shields.io/badge/PostgreSQL-15-blue" alt="PostgreSQL">
-<img src="https://img.shields.io/badge/MongoDB-6-green" alt="MongoDB">
-<img src="https://img.shields.io/badge/Consul-1.17-pink" alt="Consul">
-<img src="https://img.shields.io/badge/pattern-SAGA-purple" alt="SAGA">
-
 # 🏥 MyHeart Healthcare System
 
-**Plateforme intégrée de gestion de santé**
-Architecture Microservices · API Gateway · Circuit Breakers · Consul · Kafka/Redpanda · Pattern SAGA · Chatbot Multilingue
+### Plateforme intégrée de gestion de santé
+
+*Architecture Microservices · API Gateway · Circuit Breakers · Consul · Kafka/Redpanda · Pattern SAGA · Chatbot Multilingue*
+
+[![Version](https://img.shields.io/badge/version-3.0.0-3B6D11?style=flat-square)](https://github.com/NASRHOUDA/myheart-healthcare-system)
+[![License](https://img.shields.io/badge/license-MIT-639922?style=flat-square)](LICENSE)
+[![Spring Boot](https://img.shields.io/badge/Spring%20Boot-3.0-6DB33F?style=flat-square&logo=springboot&logoColor=white)](https://spring.io)
+[![React](https://img.shields.io/badge/React-18-61DAFB?style=flat-square&logo=react&logoColor=black)](https://react.dev)
+[![Node.js](https://img.shields.io/badge/Node.js-18-339933?style=flat-square&logo=nodedotjs&logoColor=white)](https://nodejs.org)
+[![Docker](https://img.shields.io/badge/Docker-24.0-2496ED?style=flat-square&logo=docker&logoColor=white)](https://docker.com)
+[![Kafka](https://img.shields.io/badge/Kafka-Redpanda-FF4500?style=flat-square&logo=apachekafka&logoColor=white)](https://redpanda.com)
+[![PostgreSQL](https://img.shields.io/badge/PostgreSQL-15-4169E1?style=flat-square&logo=postgresql&logoColor=white)](https://postgresql.org)
+[![MongoDB](https://img.shields.io/badge/MongoDB-6-47A248?style=flat-square&logo=mongodb&logoColor=white)](https://mongodb.com)
+[![Consul](https://img.shields.io/badge/Consul-1.17-F24C53?style=flat-square&logo=consul&logoColor=white)](https://consul.io)
+[![SAGA](https://img.shields.io/badge/pattern-SAGA-7F77DD?style=flat-square)](https://microservices.io/patterns/data/saga.html)
+
+<br/>
 
 *Mini-Projet SOA — Institut National des Postes et Télécommunications (INPT) — Filière SUD — 2025/2026*
 
-[🚀 Démarrage rapide](#-installation-et-démarrage) · [📐 Architecture](#-architecture) · [🔀 Kafka & SAGA](#-communication-asynchrone--kafka--pattern-saga) · [📡 API](#-api-documentation) · [🤖 Chatbot](#-chatbot-multilingue) · [👥 Auteurs](#-auteurs)
+<br/>
+
+[Architecture](#-architecture) · [Kafka & SAGA](#-communication-asynchrone--kafka--pattern-saga) · [Démarrage](#-installation-et-démarrage) · [Services](#-structure-des-services) · [Chatbot](#-chatbot-multilingue) · [API](#-api-documentation) · [Dépannage](#-dépannage)
 
 </div>
 
 ---
 
-## 📋 Table des matières
-
-- [Aperçu du projet](#-aperçu-du-projet)
-- [Nouveautés v3.0](#-nouveautés-v30)
-- [Nouveautés v2.0](#-nouveautés-v20-rappel)
-- [Architecture](#-architecture)
-- [Communication Asynchrone — Kafka & Pattern SAGA](#-communication-asynchrone--kafka--pattern-saga)
-- [Prérequis](#-prérequis)
-- [Installation et démarrage](#-installation-et-démarrage)
-- [Structure des services](#-structure-des-services)
-- [Ports et accès](#-ports-et-accès)
-- [Chatbot multilingue](#-chatbot-multilingue)
-- [Utilisateurs de démonstration](#-utilisateurs-de-démonstration)
-- [Commandes utiles](#-commandes-utiles)
-- [Tests API](#-tests-api-avec-curl)
-- [API Documentation](#-api-documentation)
-- [Dépannage](#-dépannage)
-- [Auteurs](#-auteurs)
-- [Licence](#-licence)
-
----
-
-## 🌟 Aperçu du projet
+## 📋 Description
 
 **MyHeart Healthcare System** est une plateforme complète de gestion des soins de santé construite sur une architecture **microservices event-driven**. Elle permet la gestion centralisée des patients, rendez-vous, dossiers médicaux, prescriptions, analyses de laboratoire et facturation — le tout via une interface React moderne, une API Gateway sécurisée et un bus d'événements Kafka.
 
 | Couche | Technologies |
-|--------|-------------|
-| Frontend | React 18, Context API |
-| Backend Java | Spring Boot 3.0 (Patient, Appointment, Billing, Pharmacy) |
-| Backend Node.js | Express (EHR, Lab) |
-| Bases de données | PostgreSQL 15, MongoDB 6 |
-| Infra | Docker 24, Docker Compose |
-| Gateway & Résilience | Node.js API Gateway, Opossum Circuit Breaker |
-| Service Discovery | Consul 1.17 |
-| Messaging asynchrone | **Apache Kafka / Redpanda v23.1.7** |
-| Transactions distribuées | **Pattern SAGA** |
-| Assistant virtuel | Chatbot local FR/EN/AR |
+|---|---|
+| **Frontend** | React 18, Context API |
+| **Backend Java** | Spring Boot 3.0 (Patient, Appointment, Billing, Pharmacy) |
+| **Backend Node.js** | Express (EHR, Lab) |
+| **Bases de données** | PostgreSQL 15, MongoDB 6 |
+| **Infrastructure** | Docker 24, Docker Compose |
+| **Gateway & Résilience** | Node.js API Gateway, Opossum Circuit Breaker |
+| **Service Discovery** | Consul 1.17 |
+| **Messaging asynchrone** | Apache Kafka / Redpanda v23.1.7 |
+| **Transactions distribuées** | Pattern SAGA |
+| **Assistant virtuel** | Chatbot local FR / EN / AR |
 
 ---
 
-## 🆕 Nouveautés v3.0
+## 🆕 Nouveautés
 
-> Version majeure introduisant la **communication asynchrone event-driven** entre les microservices EHR et Laboratoire.
+<details>
+<summary><strong>v3.0.0 — 14 Mars 2026</strong> (version actuelle)</summary>
 
 ### 🔀 Bus d'événements Kafka / Redpanda
 
-Remplacement des appels REST synchrones entre EHR et Lab par un bus de messages **Kafka-compatible** (Redpanda). Les services sont désormais totalement découplés.
+Remplacement des appels REST synchrones entre EHR et Lab par un bus de messages Kafka-compatible (Redpanda). Les services sont désormais totalement découplés.
+
 ```
 EHR Service  ──[lab-orders]──▶  Redpanda  ──[lab-orders]──▶  Lab Service
 EHR Service  ◀──[lab-results]──  Redpanda  ◀──[lab-results]──  Lab Service
@@ -80,38 +65,36 @@ EHR Service  ◀──[ehr-notifications]──  Redpanda  ◀──  Lab Servic
 ```
 
 | Topic | Direction | Partitions | Rôle |
-|-------|-----------|-----------|------|
+|---|---|---|---|
 | `lab-orders` | EHR → Lab | 3 | Demandes d'analyses médicales |
 | `lab-results` | Lab → EHR | 3 | Résultats d'analyses |
-| `ehr-notifications` | Lab → EHR | 3 | Notifications de statut (résultats prêts, urgences) |
+| `ehr-notifications` | Lab → EHR | 3 | Notifications de statut |
 
 ### 🔄 Pattern SAGA — Transactions distribuées
 
-Chaque demande d'analyse suit une chaîne d'événements traçable via le champ `sagaStep` :
 ```
 LAB_ORDER_CREATED  →  [lab-orders]  →  LAB_RESULTS_PRODUCED  →  [lab-results]  →  NOTIFICATION_SENT
 ```
 
 ### 🚨 Détection automatique d'anomalies biologiques
 
-Le EHR Consumer analyse en temps réel les résultats reçus et déclenche une alerte si une valeur sort des normes :
-
 | Analyse | Code | Norme |
-|---------|------|-------|
+|---|---|---|
 | Glycémie | `GLU` | 70 – 110 mg/dL |
 | Cholestérol | `CHOL` | 0 – 200 mg/dL |
 | Hémoglobine | `HB` | 120 – 170 g/L |
 
 ### 🔧 Correction ECONNREFUSED 0.0.0.0:9092
+Résolution via le flag `--advertise-kafka-addr redpanda:9092` et remplacement des IPs hardcodées par la variable `KAFKA_BROKERS`.
 
-Résolution du problème de connectivité Kafka dans Docker via le flag `--advertise-kafka-addr redpanda:9092` et le remplacement des IPs hardcodées par la variable d'environnement `KAFKA_BROKERS`.
+</details>
 
----
-
-## 🆕 Nouveautés v2.0 (rappel)
+<details>
+<summary><strong>v2.0.0 — 7 Mars 2026</strong></summary>
 
 ### ⚡ API Gateway centralisée
 Point d'entrée unique (port **8080**) avec gestion unifiée du CORS, de la sécurité et des logs.
+
 ```
 React :3000  →  API Gateway :8080  →  Microservices :8081–8087
 ```
@@ -119,7 +102,7 @@ React :3000  →  API Gateway :8080  →  Microservices :8081–8087
 ### 🔒 Circuit Breakers (Opossum)
 
 | Paramètre | Valeur |
-|-----------|--------|
+|---|---|
 | Timeout | 5 secondes |
 | Seuil d'ouverture | 80 % d'échecs |
 | Délai de reprise | 30 secondes |
@@ -130,9 +113,41 @@ Enregistrement automatique + health checks toutes les **10 secondes**. Interface
 ### 🤖 Chatbot multilingue
 250+ réponses locales en français, anglais et arabe. Bouton flottant sur toutes les pages.
 
+</details>
+
+<details>
+<summary><strong>v1.0.0 — 1 Mars 2026</strong></summary>
+Version initiale microservices.
+</details>
+
 ---
 
 ## 📐 Architecture
+
+### Vue d'ensemble v3.0
+
+```
+┌─────────────────────────────────────────────────────────────┐
+│                    React Frontend :3000                     │
+└──────────────────────────┬──────────────────────────────────┘
+                           │ HTTP
+┌──────────────────────────▼──────────────────────────────────┐
+│           API Gateway :8080  +  Circuit Breakers            │
+└──┬────────┬────────┬────────┬────────┬──────────────────────┘
+   │        │        │        │        │
+:8081    :8082    :8083    :8084    :8085    :8087
+Patient  Appoint  Billing   EHR ──┐  Lab ──┐  Pharmacy
+Service  Service  Service  Svc   │  Svc   │  Service
+   │        │        │      ▲    │    ▲   │     │
+ PG:5432 PG:5433 PG:5434 Mongo  │  Kafka │  Mongo  PG:5435
+                         :27017  │  :9092 │  :27018
+                                 └──▶RP◀──┘
+                               Redpanda :9092/:9644
+                                (Consul :8500)
+```
+
+### Structure du projet
+
 ```
 myheart-healthcare-system/
 ├── backend/
@@ -143,53 +158,22 @@ myheart-healthcare-system/
 │   ├── appointment-service/      # Spring Boot — PostgreSQL :8082
 │   ├── billing-service/          # Spring Boot — PostgreSQL :8083
 │   ├── ehr-service/              # Node.js — MongoDB :8084
-│   │   ├── kafka/
-│   │   │   ├── producer.js       # Publie sur lab-orders
-│   │   │   └── consumer.js       # Consomme lab-results, ehr-notifications
-│   │   └── ...
+│   │   └── kafka/
+│   │       ├── producer.js       # Publie sur lab-orders
+│   │       └── consumer.js       # Consomme lab-results, ehr-notifications
 │   ├── lab-service/              # Node.js — MongoDB :8085
-│   │   ├── kafka/
-│   │   │   ├── producer.js       # Publie sur lab-results, ehr-notifications
-│   │   │   └── consumer.js       # Consomme lab-orders
-│   │   └── ...
+│   │   └── kafka/
+│   │       ├── producer.js       # Publie sur lab-results, ehr-notifications
+│   │       └── consumer.js       # Consomme lab-orders
 │   ├── pharmacy-service/         # Spring Boot — PostgreSQL :8087
 │   └── docker-compose.yml        # Inclut Redpanda + healthchecks
 │
 └── frontend/
     └── src/
-        ├── components/
-        │   ├── auth/
-        │   ├── patient/
-        │   ├── doctor/
-        │   ├── pharmacy/
-        │   ├── lab/
-        │   ├── reception/
-        │   ├── billing/
-        │   └── chatbot/          # Assistant FR/EN/AR
+        ├── components/           # auth, patient, doctor, pharmacy, lab…
         ├── context/
         │   └── AuthContext.js
         └── App.js
-```
-
-### Vue d'ensemble de l'architecture v3.0
-```
-┌─────────────────────────────────────────────────────────────────────┐
-│                         React Frontend :3000                        │
-└──────────────────────────────┬──────────────────────────────────────┘
-                               │ HTTP
-┌──────────────────────────────▼──────────────────────────────────────┐
-│               API Gateway :8080 + Circuit Breakers                  │
-└──┬──────────┬──────────┬──────────┬──────────┬──────────────────────┘
-   │          │          │          │          │
-:8081      :8082      :8083      :8084      :8085      :8087
-Patient  Appointment Billing    EHR ──┐   Lab ──┐   Pharmacy
-Service   Service    Service  Service │ Service │  Service
-   │          │          │       ▲   │    ▲    │      │
- PG:5432  PG:5433   PG:5434  Mongo │  Kafka  │  Mongo  PG:5435
-                            :27017 │  :9092  │ :27018
-                                   └──▶RP ◀──┘
-                                     Redpanda
-                                   (Consul :8500)
 ```
 
 ---
@@ -197,31 +181,32 @@ Service   Service    Service  Service │ Service │  Service
 ## 🔀 Communication Asynchrone — Kafka & Pattern SAGA
 
 ### Flux complet d'une demande d'analyse
+
 ```
 1. POST /api/ehr/:patientId/lab-request
-        │
-        ▼
+         │
+         ▼
 2. EHR Producer ──[lab-orders]──▶ Redpanda
-        │
-        ▼
+         │
+         ▼
 3. Lab Consumer reçoit la demande
-        │
-        ▼
+         │
+         ▼
 4. Lab Service traite les analyses (CBC, GLU, CHOL…)
-        │
-        ▼
+         │
+         ▼
 5. Lab Producer ──[lab-results]──▶ Redpanda
    Lab Producer ──[ehr-notifications]──▶ Redpanda
-        │
-        ▼
+         │
+         ▼
 6. EHR Consumer reçoit les résultats
-        │
-        ▼
-7. Détection automatique des anomalies biologiques
-   Mise à jour du dossier patient dans MongoDB
+         │
+         ▼
+7. Détection automatique des anomalies → mise à jour MongoDB
 ```
 
 ### Configuration Redpanda (clé)
+
 ```yaml
 redpanda:
   image: docker.redpanda.com/redpandadata/redpanda:v23.1.7
@@ -240,17 +225,19 @@ redpanda:
 ```
 
 ### Variables d'environnement Kafka
+
 ```yaml
-# EHR Service & Lab Service
 KAFKA_BROKERS:   redpanda:9092
-KAFKA_CLIENT_ID: ehr-service        # ou lab-service
-KAFKA_GROUP_ID:  ehr-group          # ou lab-group
+KAFKA_CLIENT_ID: ehr-service     # ou lab-service
+KAFKA_GROUP_ID:  ehr-group       # ou lab-group
 ```
 
 ### Vérification du statut Kafka
+
 ```bash
 curl -s http://localhost:8084/api/kafka/status | jq .
 ```
+
 ```json
 {
   "service": "ehr-service",
@@ -280,13 +267,15 @@ curl -s http://localhost:8084/api/kafka/status | jq .
 
 ## 🚀 Installation et démarrage
 
-### 1. Cloner le projet
+### 1 — Cloner le projet
+
 ```bash
 git clone https://github.com/NASRHOUDA/myheart-healthcare-system.git
 cd myheart-healthcare-system
 ```
 
-### 2. Lancer tous les services backend (incluant Redpanda)
+### 2 — Lancer tous les services backend
+
 ```bash
 cd backend
 docker-compose up -d
@@ -294,7 +283,8 @@ docker-compose up -d
 
 > ⏳ Attendre ~15 secondes que Redpanda passe son healthcheck avant que EHR et Lab se connectent.
 
-### 3. Vérifier que tous les conteneurs sont lancés
+### 3 — Vérifier les conteneurs
+
 ```bash
 docker ps
 # Attendu : redpanda, ehr-service, lab-service, patient-service,
@@ -302,7 +292,8 @@ docker ps
 #           ehr-db, lab-db, consul + bases PostgreSQL
 ```
 
-### 4. Lancer l'API Gateway
+### 4 — Lancer l'API Gateway
+
 ```bash
 cd backend/api-gateway
 npm install
@@ -310,7 +301,8 @@ node index.js
 # Gateway disponible sur http://localhost:8080
 ```
 
-### 5. Lancer le frontend
+### 5 — Lancer le frontend
+
 ```bash
 cd frontend
 npm install
@@ -318,10 +310,10 @@ npm start
 # Application disponible sur http://localhost:3000
 ```
 
-### 6. Vérifier les interfaces de monitoring *(optionnel)*
+### 6 — Interfaces de monitoring *(optionnel)*
 
 | Interface | URL |
-|-----------|-----|
+|---|---|
 | Consul UI | http://localhost:8500 |
 | Redpanda Admin API | http://localhost:9644 |
 | EHR Kafka Status | http://localhost:8084/api/kafka/status |
@@ -331,23 +323,23 @@ npm start
 
 ## 📡 Structure des services
 
-### Backend — Microservices
+### Microservices Backend
 
 | Service | Port | Base de données | Technologie | Rôle Kafka |
-|---------|------|----------------|-------------|-----------|
-| api-gateway | **8080** | — | Node.js | — |
-| patient-service | 8081 | PostgreSQL :5432 | Spring Boot | — |
-| appointment-service | 8082 | PostgreSQL :5433 | Spring Boot | — |
-| billing-service | 8083 | PostgreSQL :5434 | Spring Boot | — |
-| ehr-service | 8084 | MongoDB :27017 | Node.js | **Producer + Consumer** |
-| lab-service | 8085 | MongoDB :27018 | Node.js | **Producer + Consumer** |
-| pharmacy-service | 8087 | PostgreSQL :5435 | Spring Boot | — |
-| **redpanda** | **9092 / 9644** | — | Redpanda | **Message Broker** |
+|---|---|---|---|---|
+| `api-gateway` | **8080** | — | Node.js | — |
+| `patient-service` | 8081 | PostgreSQL :5432 | Spring Boot | — |
+| `appointment-service` | 8082 | PostgreSQL :5433 | Spring Boot | — |
+| `billing-service` | 8083 | PostgreSQL :5434 | Spring Boot | — |
+| `ehr-service` | 8084 | MongoDB :27017 | Node.js | **Producer + Consumer** |
+| `lab-service` | 8085 | MongoDB :27018 | Node.js | **Producer + Consumer** |
+| `pharmacy-service` | 8087 | PostgreSQL :5435 | Spring Boot | — |
+| `redpanda` | **9092 / 9644** | — | Redpanda | **Message Broker** |
 
-### Frontend — Espaces utilisateurs
+### Espaces utilisateurs Frontend
 
-| Espace | URL | Rôle |
-|--------|-----|------|
+| Espace | URL | Profil |
+|---|---|---|
 | Connexion | `http://localhost:3000` | — |
 | Patient | `/patient/dashboard` | 👤 Patient |
 | Médecin | `/doctor/dashboard` | 👨‍⚕️ Médecin |
@@ -356,29 +348,27 @@ npm start
 | Réception | `/reception/dashboard` | 🏥 Agent d'accueil |
 | Caisse | `/billing/dashboard` | 💰 Caissier |
 
----
+### Ports complets
 
-## 🔌 Ports et accès
-
-| Composant | Port | Nouveauté |
-|-----------|------|-----------|
-| Frontend React | 3000 | |
-| API Gateway | **8080** | |
-| Patient Service | 8081 | |
-| Appointment Service | 8082 | |
-| Billing Service | 8083 | |
-| EHR Service | 8084 | |
-| Lab Service | 8085 | |
-| Pharmacy Service | 8087 | |
-| Consul UI | **8500** | |
-| **Redpanda — Kafka API** | **9092** | 🆕 v3.0 |
-| **Redpanda — Admin API** | **9644** | 🆕 v3.0 |
-| patient-db (PostgreSQL) | 5432 | |
-| appointment-db (PostgreSQL) | 5433 | |
-| billing-db (PostgreSQL) | 5434 | |
-| pharmacy-db (PostgreSQL) | 5435 | |
-| ehr-db (MongoDB) | 27017 | |
-| lab-db (MongoDB) | 27018 | |
+| Composant | Port |
+|---|---|
+| Frontend React | 3000 |
+| API Gateway | **8080** |
+| Patient Service | 8081 |
+| Appointment Service | 8082 |
+| Billing Service | 8083 |
+| EHR Service | 8084 |
+| Lab Service | 8085 |
+| Pharmacy Service | 8087 |
+| Consul UI | **8500** |
+| Redpanda — Kafka API 🆕 | **9092** |
+| Redpanda — Admin API 🆕 | **9644** |
+| patient-db (PostgreSQL) | 5432 |
+| appointment-db (PostgreSQL) | 5433 |
+| billing-db (PostgreSQL) | 5434 |
+| pharmacy-db (PostgreSQL) | 5435 |
+| ehr-db (MongoDB) | 27017 |
+| lab-db (MongoDB) | 27018 |
 
 ---
 
@@ -387,7 +377,7 @@ npm start
 Assistant virtuel **100 % hors ligne**, intégré sur toutes les pages via un bouton flottant.
 
 | Caractéristique | Valeur |
-|----------------|--------|
+|---|---|
 | Base de réponses | 250+ entrées |
 | Langues | 🇫🇷 Français · 🇬🇧 Anglais · 🇲🇦 Arabe |
 | Temps de réponse | < 100 ms |
@@ -395,7 +385,7 @@ Assistant virtuel **100 % hors ligne**, intégré sur toutes les pages via un bo
 ### Réponses par catégorie
 
 | Catégorie | Réponses | Exemples |
-|-----------|----------|---------|
+|---|---|---|
 | Laboratoire | 80+ | Glycémie, cholestérol, CRP, TSH |
 | Médicaments | 30+ | Paracétamol, ibuprofène, antibiotiques |
 | Pathologies | 40+ | Grippe, diabète, hypertension |
@@ -407,7 +397,7 @@ Assistant virtuel **100 % hors ligne**, intégré sur toutes les pages via un bo
 ### Adaptation par profil
 
 | Profil | Assistance |
-|--------|-----------|
+|---|---|
 | 👤 Patient | Rendez-vous, médicaments, factures |
 | 👨‍⚕️ Médecin | Prescriptions, dossiers patients |
 | 🔬 Laboratoire | Analyses, normes, résultats |
@@ -418,40 +408,30 @@ Assistant virtuel **100 % hors ligne**, intégré sur toutes les pages via un bo
 
 ## 👥 Utilisateurs de démonstration
 
-### 👨‍⚕️ Médecin
-```
-Email        : youssef.benjelloun@gmail.com
-Mot de passe : youssef123
-```
-
-### 👤 Patient
-```
-Email        : ahmed.allami@gmail.com
-Mot de passe : ahmed123
-```
-
-### 💊 Pharmacien
-```
-Email        : nadiafassi67@gmail.com
-Mot de passe : nadia123
-```
+| Rôle | Email | Mot de passe |
+|---|---|---|
+| 👨‍⚕️ Médecin | youssef.benjelloun@gmail.com | youssef123 |
+| 👤 Patient | ahmed.allami@gmail.com | ahmed123 |
+| 💊 Pharmacien | nadiafassi67@gmail.com | nadia123 |
 
 ---
 
-## 🛠 Commandes utiles
+## 🛠️ Commandes utiles
 
-### Docker — Services généraux
+### Docker
+
 ```bash
-docker ps                            # Voir tous les conteneurs actifs
-docker logs ehr-service              # Logs EHR
-docker logs lab-service              # Logs Lab
-docker restart lab-service           # Redémarrer un service
-docker-compose down                  # Arrêter tout
-docker-compose up -d                 # Relancer tout
-docker-compose up -d --build         # Reconstruire après modification
+docker ps                          # Voir tous les conteneurs actifs
+docker logs ehr-service            # Logs EHR
+docker logs lab-service            # Logs Lab
+docker restart lab-service         # Redémarrer un service
+docker-compose down                # Arrêter tout
+docker-compose up -d               # Relancer tout
+docker-compose up -d --build       # Reconstruire après modification
 ```
 
-### Kafka / Redpanda — Débogage v3.0
+### Kafka / Redpanda
+
 ```bash
 # Statut Kafka des services
 curl -s http://localhost:8084/api/kafka/status
@@ -463,12 +443,13 @@ docker logs redpanda --tail 30
 # Topics disponibles via Admin API
 curl http://localhost:9644/v1/topics
 
-# Logs en direct — voir les messages consommés
+# Logs en direct
 docker logs ehr-service --follow
 docker logs lab-service --follow
 ```
 
 ### Frontend
+
 ```bash
 npm start          # Démarrer en développement
 npm run build      # Build production
@@ -477,32 +458,23 @@ npm test           # Lancer les tests
 
 ---
 
-## 🧪 Tests API avec curl
+## 🧪 Tests API
 
-### Services existants (via API Gateway)
+### Via API Gateway
+
 ```bash
-# Patients
 curl http://localhost:8080/api/patients
-
-# Rendez-vous d'un patient
 curl http://localhost:8080/api/appointments/patient/1
-
-# Médicaments
 curl http://localhost:8080/api/medications
-
-# Dossier médical
 curl http://localhost:8080/api/ehr/patient/1
-
-# Analyses laboratoire
 curl http://localhost:8080/api/lab/patient/1
 ```
 
-### Nouveaux endpoints Kafka — v3.0
-```bash
-# Statut Kafka EHR
-curl -s http://localhost:8084/api/kafka/status | jq .
+### Endpoints Kafka — v3.0 🆕
 
-# Statut Kafka Lab
+```bash
+# Statut Kafka
+curl -s http://localhost:8084/api/kafka/status | jq .
 curl -s http://localhost:8085/api/kafka/status | jq .
 
 # Envoyer une demande d'analyse (déclenche le flux Kafka complet)
@@ -513,21 +485,17 @@ curl -X POST http://localhost:8084/api/ehr/12345/lab-request \
     "doctorId":    "DR001",
     "tests": [
       { "testCode": "CBC",  "testName": "Numération formule sanguine" },
-      { "testCode": "GLU",  "testName": "Glycémie"                   },
-      { "testCode": "CHOL", "testName": "Cholestérol total"          }
+      { "testCode": "GLU",  "testName": "Glycémie" },
+      { "testCode": "CHOL", "testName": "Cholestérol total" }
     ],
     "priority": "URGENT"
   }'
-
-# Santé des services (Consul)
-curl http://localhost:8084/health
-curl http://localhost:8085/health
 ```
 
-> 💡 Après le POST `/lab-request`, surveiller les logs en temps réel :
+> 💡 Après le POST, surveiller les logs en temps réel :
 > ```bash
 > docker logs lab-service --follow   # Réception et traitement
-> docker logs ehr-service --follow   # Réception des résultats + alertes
+> docker logs ehr-service --follow   # Résultats + alertes
 > ```
 
 ---
@@ -537,7 +505,7 @@ curl http://localhost:8085/health
 ### Patient Service — `/api/patients` & `/api/auth`
 
 | Méthode | Endpoint | Description |
-|---------|----------|-------------|
+|---|---|---|
 | POST | `/api/auth/login` | Connexion |
 | GET | `/api/patients` | Liste tous les patients |
 | GET | `/api/patients/{id}` | Détail d'un patient |
@@ -546,7 +514,7 @@ curl http://localhost:8085/health
 ### Appointment Service — `/api/appointments`
 
 | Méthode | Endpoint | Description |
-|---------|----------|-------------|
+|---|---|---|
 | GET | `/` | Liste tous les rendez-vous |
 | GET | `/doctor/{doctorId}` | Rendez-vous d'un médecin |
 | GET | `/patient/{patientId}` | Rendez-vous d'un patient |
@@ -555,7 +523,7 @@ curl http://localhost:8085/health
 ### Billing Service — `/api/bills`
 
 | Méthode | Endpoint | Description |
-|---------|----------|-------------|
+|---|---|---|
 | GET | `/` | Liste toutes les factures |
 | GET | `/{id}` | Détail d'une facture |
 | GET | `/patient/{patientId}` | Factures d'un patient |
@@ -565,30 +533,30 @@ curl http://localhost:8085/health
 ### EHR Service — `/api/ehr` 🆕 Kafka
 
 | Méthode | Endpoint | Description |
-|---------|----------|-------------|
+|---|---|---|
 | GET | `/` | Liste tous les dossiers |
 | GET | `/patient/{patientId}` | Dossiers d'un patient |
 | POST | `/` | Créer un dossier |
-| **POST** | **`/ehr/:patientId/lab-request`** | **🆕 Envoyer une demande d'analyse via Kafka** |
-| **GET** | **`/kafka/status`** | **🆕 Statut Producer/Consumer Kafka** |
+| **POST** | **`/ehr/:patientId/lab-request`** | 🆕 Demande d'analyse via Kafka |
+| **GET** | **`/kafka/status`** | 🆕 Statut Producer/Consumer |
 | GET | `/health` | Health check Consul |
 
 ### Lab Service — `/api/lab` 🆕 Kafka
 
 | Méthode | Endpoint | Description |
-|---------|----------|-------------|
+|---|---|---|
 | GET | `/` | Liste toutes les analyses |
 | GET | `/patient/{patientId}` | Analyses d'un patient |
 | POST | `/` | Créer une analyse |
 | PATCH | `/{id}` | Mettre à jour une analyse |
-| **GET** | **`/kafka/status`** | **🆕 Statut Producer/Consumer Kafka** |
-| **POST** | **`/kafka/send-test-result`** | **🆕 Tester la publication Kafka** |
+| **GET** | **`/kafka/status`** | 🆕 Statut Producer/Consumer |
+| **POST** | **`/kafka/send-test-result`** | 🆕 Tester la publication Kafka |
 | GET | `/health` | Health check Consul |
 
 ### Pharmacy Service — `/api/medications` & `/api/prescriptions`
 
 | Méthode | Endpoint | Description |
-|---------|----------|-------------|
+|---|---|---|
 | GET | `/medications` | Liste tous les médicaments |
 | POST | `/medications` | Ajouter un médicament |
 | GET | `/prescriptions` | Liste toutes les prescriptions |
@@ -602,82 +570,70 @@ curl http://localhost:8085/health
 
 ### Problèmes généraux
 
-**"Empty reply from server"**
-```bash
-docker logs lab-service    # Vérifier les logs du service concerné
-```
-
-**Port déjà utilisé**
-```bash
-# Linux / Mac
-lsof -i :8087
-# Windows
-netstat -ano | findstr :8087
-```
-
-**Services Consul non enregistrés**
-```bash
-docker logs ehr-service
-docker logs lab-service
-open http://localhost:8500
-```
-
-**Le frontend ne se connecte pas à l'API**
-> Vérifier que l'API Gateway tourne sur le port 8080 et que le `.env` du frontend pointe vers `http://localhost:8080`.
+| Problème | Solution |
+|---|---|
+| `Empty reply from server` | `docker logs <service>` pour identifier l'erreur |
+| Port déjà utilisé | `lsof -i :<port>` (Linux/Mac) ou `netstat -ano \| findstr :<port>` (Windows) |
+| Services Consul non enregistrés | Vérifier les logs EHR/Lab puis `http://localhost:8500` |
+| Frontend ne se connecte pas | Vérifier que l'API Gateway tourne sur le port 8080 |
 
 ### Problèmes Kafka / Redpanda — v3.0
 
-**`ECONNREFUSED 0.0.0.0:9092` dans les logs**
-> Vérifier que le flag `--advertise-kafka-addr redpanda:9092` est bien présent dans `docker-compose.yml`, puis relancer :
-> ```bash
-> docker-compose up -d --build
-> ```
+**`ECONNREFUSED 0.0.0.0:9092`**
+```bash
+# Vérifier le flag --advertise-kafka-addr dans docker-compose.yml puis :
+docker-compose up -d --build
+```
 
 **Consumer Group non enregistré**
-> Attendre ~15 secondes après le démarrage de Redpanda. Vérifier le healthcheck :
-> ```bash
-> docker logs redpanda --tail 20
-> curl http://localhost:9644/v1/status/ready
-> ```
+```bash
+# Attendre ~15 secondes après démarrage, puis vérifier :
+docker logs redpanda --tail 20
+curl http://localhost:9644/v1/status/ready
+```
 
 **Messages non reçus entre EHR et Lab**
-> ```bash
-> # Vérifier que les topics existent
-> curl http://localhost:9644/v1/topics
-> # Suivre les logs en direct
-> docker logs ehr-service --follow
-> docker logs lab-service --follow
-> ```
+```bash
+curl http://localhost:9644/v1/topics     # Vérifier que les topics existent
+docker logs ehr-service --follow
+docker logs lab-service --follow
+```
 
-**`docker-compose restart` n'applique pas les modifications**
-> Utiliser systématiquement :
-> ```bash
-> docker-compose up -d --build
-> ```
+**Modifications non prises en compte après restart**
+```bash
+# Toujours utiliser --build :
+docker-compose up -d --build
+```
 
 ---
 
-## 👨‍💻 Auteurs
+## 👩‍💻 Auteure
 
-**NASRHOUDA** — *Data DevOps Cloud Engineer*
-[![GitHub](https://img.shields.io/badge/GitHub-NASRHOUDA-black?logo=github)](https://github.com/NASRHOUDA)
+**Houda Nasr** — DevOps Engineer & Full Stack Developer
+
+[![Portfolio](https://img.shields.io/badge/Portfolio-mon--portfolio--dzf4.vercel.app-3B6D11?style=flat-square&logo=safari&logoColor=white)](https://mon-portfolio-dzf4.vercel.app)
+[![LinkedIn](https://img.shields.io/badge/LinkedIn-Houda%20Nasr-0A66C2?style=flat-square&logo=linkedin&logoColor=white)](https://www.linkedin.com/in/houda-nasr-16b9a032a/)
+[![Email](https://img.shields.io/badge/Email-houdanasr520%40gmail.com-EA4335?style=flat-square&logo=gmail&logoColor=white)](mailto:houdanasr520@gmail.com)
+[![GitHub](https://img.shields.io/badge/GitHub-NASRHOUDA-181717?style=flat-square&logo=github&logoColor=white)](https://github.com/NASRHOUDA)
 
 ---
 
 ## 📄 Licence
 
-Ce projet est sous licence **MIT**. Voir le fichier [LICENSE](LICENSE) pour plus de détails.
+Ce projet est distribué sous licence **MIT**. Voir le fichier [LICENSE](LICENSE) pour plus de détails.
 
 ---
 
 <div align="center">
 
 | Version | Date | Changements |
-|---------|------|-------------|
+|---|---|---|
 | v3.0.0 | 14 Mars 2026 | Kafka/Redpanda · Pattern SAGA · Détection anomalies |
 | v2.0.0 | 7 Mars 2026 | API Gateway · Circuit Breakers · Consul · Chatbot |
 | v1.0.0 | 1 Mars 2026 | Version initiale microservices |
 
-<sub>🏥 MyHeart Healthcare System v3.0 — Mini-Projet SOA — INPT Filière SUD — 2025/2026</sub>
+<br/>
+
+**🏥 MyHeart Healthcare System v3.0 — Mini-Projet SOA — INPT Filière SUD — 2025/2026**
 
 </div>
