@@ -2,7 +2,7 @@
 
 <img src="heartapp.PNG" alt="MyHeart Logo" width="120"/>
 
-# 🏥 MyHeart Healthcare System
+# MyHeart Healthcare System
 
 ### Plateforme intégrée de gestion de santé
 
@@ -638,6 +638,6 @@ Ce projet est distribué sous licence **MIT**. Voir le fichier [LICENSE](LICENSE
 
 <br/>
 
-**🏥 MyHeart Healthcare System v3.0 — Mini-Projet SOA — INPT Filière SUD — 2025/2026**
+** MyHeart Healthcare System v3.0 — Mini-Projet SOA — INPT Filière SUD — 2025/2026**
 
 </div>
